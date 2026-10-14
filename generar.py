@@ -57,7 +57,8 @@ for nombre, items in grupos:
         clase = 'cert insignia' if 'kickoff' in img else 'cert'
         extra = f'<span>{e(nota)}</span>' if nota else ''
         tarjetas.append(
-            f'      <a class="{clase}" href="{e(href)}" target="_blank" rel="noopener">\n'
+            f'      <a class="{clase}" href="{e(href)}" target="_blank" rel="noopener" '
+            f'data-img="{C}/{img}" data-orig="{e(enlace or "")}" data-accion="{accion}">\n'
             f'        <div class="marco"><img src="{C}/{img}" width="{w}" height="{h}" loading="lazy" alt="{e(titulo)}"></div>\n'
             f'        <div class="texto"><b class="inst">{e(CORTO.get(nombre, nombre))}</b><strong>{e(titulo)}</strong>'
             f'<span>{fecha}</span>{extra}<em>{accion}</em></div>\n'
@@ -112,7 +113,74 @@ css = """
   footer .ancho { padding-top:36px; padding-bottom:40px; display:flex; flex-wrap:wrap; gap:12px 32px; justify-content:space-between; align-items:baseline; }
   footer strong { font-family:var(--titulo); color:#fff; font-size:22px; }
   footer a { color:#fff; text-underline-offset:4px; }
+  .visor { position:fixed; inset:0; z-index:20; background:rgba(8,14,30,.94); display:none; flex-direction:column;
+           align-items:center; justify-content:center; gap:14px; padding:60px 76px 28px; }
+  .visor.abierto { display:flex; }
+  .visor img { max-width:100%; max-height:calc(100vh - 170px); object-fit:contain; border-radius:6px; background:#fff;
+               box-shadow:0 20px 60px rgba(0,0,0,.6); }
+  .visor .pie { color:#C9D3E6; font-size:15px; text-align:center; max-width:70ch; }
+  .visor .pie b { display:block; color:#fff; font-family:var(--titulo); font-size:19px; font-weight:700; }
+  .visor .orig { background:var(--ambar); color:var(--tinta); font-weight:700; text-decoration:none; padding:9px 18px; border-radius:8px; }
+  .visor .orig[hidden] { display:none; }
+  .visor button { position:absolute; width:52px; height:52px; border-radius:50%; border:0; cursor:pointer;
+                  background:rgba(255,255,255,.10); color:#fff; font-size:26px; line-height:1; }
+  .visor button:hover { background:rgba(255,255,255,.22); }
+  .visor .cerrar { top:14px; right:16px; font-size:22px; }
+  .visor .ant { left:14px; top:50%; transform:translateY(-50%); }
+  .visor .sig { right:14px; top:50%; transform:translateY(-50%); }
+  @media (max-width:700px) { .visor { padding:64px 10px 20px; } .visor .ant, .visor .sig { display:none; } }
   @media (max-width:700px) { body { font-size:16px; } .ancho { padding:0 16px; } header .ancho { padding-top:44px; padding-bottom:36px; } }
+"""
+
+VISOR = r"""<div class="visor" role="dialog" aria-modal="true" aria-label="Certificado en grande">
+  <img alt="">
+  <div class="pie" aria-live="polite"></div>
+  <a class="orig" target="_blank" rel="noopener" hidden></a>
+  <button type="button" class="cerrar" aria-label="Cerrar">&#x2715;</button>
+  <button type="button" class="ant" aria-label="Anterior">&#x2039;</button>
+  <button type="button" class="sig" aria-label="Siguiente">&#x203A;</button>
+</div>
+<script>
+(function () {
+  var visor = document.querySelector('.visor'), foto = visor.querySelector('img'), pie = visor.querySelector('.pie'),
+      orig = visor.querySelector('.orig'), certs = Array.prototype.slice.call(document.querySelectorAll('.cert')),
+      pos = 0, origen = null;
+  function mostrar() {
+    var c = certs[pos], titulo = c.querySelector('strong').textContent;
+    foto.src = c.dataset.img; foto.alt = titulo;
+    pie.innerHTML = '';
+    var b = document.createElement('b'); b.textContent = titulo; pie.appendChild(b);
+    pie.appendChild(document.createTextNode(c.querySelector('.inst').textContent + ', ' + c.querySelector('span').textContent + '. ' + (pos + 1) + ' de ' + certs.length));
+    if (c.dataset.orig) { orig.hidden = false; orig.href = c.dataset.orig; orig.textContent = c.dataset.accion; }
+    else { orig.hidden = true; }
+  }
+  function abrir(i, el) { pos = i; origen = el; mostrar(); visor.classList.add('abierto'); document.body.style.overflow = 'hidden'; visor.querySelector('.cerrar').focus(); }
+  function cerrar() { visor.classList.remove('abierto'); document.body.style.overflow = ''; if (origen) origen.focus(); }
+  function mover(d) { pos = (pos + d + certs.length) % certs.length; mostrar(); }
+  certs.forEach(function (c, i) {
+    c.addEventListener('click', function (ev) {
+      if (ev.ctrlKey || ev.metaKey || ev.shiftKey || ev.button === 1) return;
+      ev.preventDefault(); abrir(i, c);
+    });
+  });
+  visor.querySelector('.cerrar').addEventListener('click', cerrar);
+  visor.querySelector('.ant').addEventListener('click', function () { mover(-1); });
+  visor.querySelector('.sig').addEventListener('click', function () { mover(1); });
+  visor.addEventListener('click', function (ev) { if (ev.target === visor || ev.target === pie) cerrar(); });
+  document.addEventListener('keydown', function (ev) {
+    if (!visor.classList.contains('abierto')) return;
+    if (ev.key === 'Escape') cerrar();
+    else if (ev.key === 'ArrowLeft') mover(-1);
+    else if (ev.key === 'ArrowRight') mover(1);
+  });
+  var x0 = null;
+  visor.addEventListener('touchstart', function (ev) { x0 = ev.touches[0].clientX; }, { passive: true });
+  visor.addEventListener('touchend', function (ev) {
+    if (x0 === null) return; var dx = ev.changedTouches[0].clientX - x0; x0 = null;
+    if (Math.abs(dx) > 45) mover(dx < 0 ? 1 : -1);
+  });
+})();
+</script>
 """
 
 pagina = f"""<!doctype html>
@@ -132,7 +200,7 @@ pagina = f"""<!doctype html>
 <header>
   <div class="ancho">
     <h1>Certificaciones</h1>
-    <p class="quien">Tengo {total} certificados de PMI, IBM, Atlassian, Cisco, Agile Academy y Simplilearn, en gestión de proyectos, métodos ágiles, IA generativa y trabajo en equipo. Toca uno para ver el original.</p>
+    <p class="quien">Tengo {total} certificados de PMI, IBM, Atlassian, Cisco, Agile Academy y Simplilearn, en gestión de proyectos, métodos ágiles, IA generativa y trabajo en equipo. Toca uno para verlo en grande.</p>
   </div>
 </header>
 <main class="ancho">
@@ -144,6 +212,7 @@ pagina = f"""<!doctype html>
     <span>Mira mis proyectos en <a href="https://tunuba.github.io/proyectos/">tunuba.github.io/proyectos</a></span>
   </div>
 </footer>
+{VISOR}
 </body>
 </html>
 """
