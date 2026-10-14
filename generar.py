@@ -83,34 +83,35 @@ css = """
   header { background:var(--cobalto); color:#fff; position:relative; }
   header::before { content:""; position:absolute; inset:0; pointer-events:none; opacity:.55;
     background:radial-gradient(circle at 1px 1px, rgba(255,255,255,.10) 1.2px, transparent 1.6px) 0 0/22px 22px; }
-  header .ancho { position:relative; padding-top:64px; padding-bottom:52px; }
-  header h1 { font-family:var(--titulo); font-weight:800; font-size:clamp(40px,6.6vw,92px); line-height:.95; letter-spacing:-.02em;
+  header .ancho { position:relative; padding-top:40px; padding-bottom:34px; }
+  header h1 { font-family:var(--titulo); font-weight:800; font-size:clamp(36px,5.4vw,76px); line-height:.95; letter-spacing:-.02em;
               font-variation-settings:"wdth" 92; }
   header .quien { margin-top:18px; font-size:19px; color:#DCE5FA; max-width:56ch; }
   header nav { margin-top:24px; display:flex; flex-wrap:wrap; gap:10px 22px; font-size:16px; }
   header nav a { color:#fff; text-decoration-color:rgba(255,178,26,.7); text-decoration-thickness:2px; text-underline-offset:5px; }
   header nav a:hover { color:var(--ambar); }
   main { padding-bottom:40px; }
-  section { padding-top:56px; scroll-margin-top:8px; }
+  section { padding-top:36px; scroll-margin-top:8px; }
   h2 { font-family:var(--titulo); font-weight:800; font-size:clamp(26px,3.4vw,38px); letter-spacing:-.02em; line-height:1.05;
-       display:flex; align-items:flex-end; gap:14px; margin-bottom:24px; }
+       display:flex; align-items:flex-end; gap:14px; margin-bottom:16px; }
   h2 small { font-family:var(--texto); font-weight:400; font-size:16px; color:var(--pizarra); letter-spacing:0; }
   h2::after { content:""; flex:1; height:4px; margin-bottom:8px; border-radius:2px;
     background:linear-gradient(var(--rojo) 0 0) top/100% 1.5px no-repeat, linear-gradient(var(--azul) 0 0) bottom/100% 1.5px no-repeat; }
-  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(min(320px,100%),1fr)); gap:24px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(min(250px,100%),1fr)); gap:16px; }
   .cert, .marco, .texto { min-width:0; }
   .cert { display:flex; flex-direction:column; background:var(--papel); border:1px solid var(--linea); border-radius:12px; overflow:hidden;
           text-decoration:none; color:inherit; transition:box-shadow .2s, border-color .2s; }
   .cert:hover { border-color:var(--cobalto); box-shadow:0 18px 40px -22px rgba(14,26,51,.55); }
-  .marco { background:var(--tinta); padding:14px; display:flex; align-items:center; justify-content:center; aspect-ratio:4/3; }
-  .marco img { max-width:100%; max-height:100%; width:auto; height:auto; display:block; border-radius:3px; }
-  .insignia .marco img { max-width:58%; max-height:78%; border-radius:50%; }
-  .texto { padding:16px 18px 18px; display:flex; flex-direction:column; gap:4px; flex:1; }
-  .texto strong { font-family:var(--titulo); font-weight:700; font-size:18px; line-height:1.25; letter-spacing:-.01em; }
-  .texto span { font-size:15px; color:var(--pizarra); }
-  .texto em { font-style:normal; font-size:15px; font-weight:600; color:var(--cobalto); margin-top:auto; padding-top:12px;
+  .marco { background:var(--tinta); padding:10px; display:flex; align-items:center; justify-content:center; aspect-ratio:3/2; }
+  .marco { overflow:hidden; }
+  .marco img { width:100%; height:100%; object-fit:contain; display:block; }
+  .insignia .marco img { width:auto; height:84%; aspect-ratio:1; border-radius:50%; }
+  .texto { padding:12px 14px 14px; display:flex; flex-direction:column; gap:2px; flex:1; }
+  .texto strong { font-family:var(--titulo); font-weight:700; font-size:16px; line-height:1.25; letter-spacing:-.01em; }
+  .texto span { font-size:14px; color:var(--pizarra); }
+  .texto em { font-style:normal; font-size:14px; font-weight:600; color:var(--cobalto); margin-top:auto; padding-top:8px;
               text-decoration:underline; text-decoration-color:var(--ambar); text-decoration-thickness:2px; text-underline-offset:4px; }
-  footer { margin-top:56px; background:var(--tinta); color:#C9D3E6; }
+  footer { margin-top:40px; background:var(--tinta); color:#C9D3E6; }
   footer .ancho { padding-top:36px; padding-bottom:40px; display:flex; flex-wrap:wrap; gap:12px 32px; justify-content:space-between; align-items:baseline; }
   footer strong { font-family:var(--titulo); color:#fff; font-size:22px; }
   footer a { color:#fff; text-underline-offset:4px; }
