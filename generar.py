@@ -122,7 +122,7 @@ pagina = f"""<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#16337A">
 <title>Certificaciones de José Manuel González Corado</title>
-<meta name="description" content="Certificados de José Manuel González Corado en gestión de proyectos, metodologías ágiles, IA generativa y habilidades profesionales.">
+<meta name="description" content="Soy José Manuel González Corado y estos son mis certificados en gestión de proyectos, métodos ágiles, IA generativa y trabajo en equipo.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wdth,wght@75..100,400..700&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&display=swap" rel="stylesheet">
@@ -132,7 +132,7 @@ pagina = f"""<!doctype html>
 <header>
   <div class="ancho">
     <h1>Certificaciones</h1>
-    <p class="quien">José Manuel González Corado tiene {total} certificados de PMI, IBM, Atlassian, Cisco, Agile Academy y Simplilearn, en gestión de proyectos, métodos ágiles, IA generativa y trabajo en equipo. Toca uno para ver el original.</p>
+    <p class="quien">Tengo {total} certificados de PMI, IBM, Atlassian, Cisco, Agile Academy y Simplilearn, en gestión de proyectos, métodos ágiles, IA generativa y trabajo en equipo. Toca uno para ver el original.</p>
   </div>
 </header>
 <main class="ancho">
@@ -151,5 +151,5 @@ pagina = f"""<!doctype html>
 with open(os.path.join(RAIZ, 'index.html'), 'w', encoding='utf-8') as f:
     f.write(pagina)
 with open(os.path.join(RAIZ, 'README.md'), 'w', encoding='utf-8') as f:
-    f.write('# Certificaciones\n\nCertificados de José Manuel González Corado.\n\nVerlos en https://tunuba.github.io/certificaciones/\n')
+    f.write('# Certificaciones\n\nMis certificados, de José Manuel González Corado.\n\nVerlos en https://tunuba.github.io/certificaciones/\n')
 print(total)
