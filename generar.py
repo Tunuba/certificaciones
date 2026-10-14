@@ -42,9 +42,9 @@ grupos = [
 total = sum(len(g[1]) for g in grupos)
 e = html.escape
 
-secciones = []
-for i, (nombre, items) in enumerate(grupos):
-    tarjetas = []
+CORTO = {'Project Management Institute': 'PMI', 'Cisco Networking Academy': 'Cisco'}
+tarjetas = []
+for nombre, items in grupos:
     for img, enlace, titulo, fecha, nota in items:
         w, h = Image.open(os.path.join(RAIZ, C, img)).size
         href = enlace or (C + '/' + img)
@@ -59,14 +59,10 @@ for i, (nombre, items) in enumerate(grupos):
         tarjetas.append(
             f'      <a class="{clase}" href="{e(href)}" target="_blank" rel="noopener">\n'
             f'        <div class="marco"><img src="{C}/{img}" width="{w}" height="{h}" loading="lazy" alt="{e(titulo)}"></div>\n'
-            f'        <div class="texto"><strong>{e(titulo)}</strong><span>{fecha}</span>{extra}<em>{accion}</em></div>\n'
+            f'        <div class="texto"><b class="inst">{e(CORTO.get(nombre, nombre))}</b><strong>{e(titulo)}</strong>'
+            f'<span>{fecha}</span>{extra}<em>{accion}</em></div>\n'
             f'      </a>')
-    secciones.append(
-        f'  <section id="g{i}">\n'
-        f'    <h2>{e(nombre)} <small>{len(items)}</small></h2>\n'
-        f'    <div class="grid">\n' + '\n'.join(tarjetas) + '\n    </div>\n  </section>')
-
-nav = ''.join(f'<a href="#g{i}">{e(g[0])}</a>' for i, g in enumerate(grupos))
+secciones = ['  <section>\n    <div class="grid">\n' + '\n'.join(tarjetas) + '\n    </div>\n  </section>']
 
 css = """
   :root {
@@ -91,25 +87,26 @@ css = """
   header nav a { color:#fff; text-decoration-color:rgba(255,178,26,.7); text-decoration-thickness:2px; text-underline-offset:5px; }
   header nav a:hover { color:var(--ambar); }
   main { padding-bottom:40px; }
-  section { padding-top:36px; scroll-margin-top:8px; }
-  h2 { font-family:var(--titulo); font-weight:800; font-size:clamp(26px,3.4vw,38px); letter-spacing:-.02em; line-height:1.05;
-       display:flex; align-items:flex-end; gap:14px; margin-bottom:16px; }
+  section { padding-top:28px; scroll-margin-top:8px; }
+  h2 { font-family:var(--titulo); font-weight:800; font-size:clamp(22px,2.6vw,30px); letter-spacing:-.02em; line-height:1.05;
+       display:flex; align-items:flex-end; gap:14px; margin-bottom:12px; }
   h2 small { font-family:var(--texto); font-weight:400; font-size:16px; color:var(--pizarra); letter-spacing:0; }
   h2::after { content:""; flex:1; height:4px; margin-bottom:8px; border-radius:2px;
-    background:linear-gradient(var(--rojo) 0 0) top/100% 1.5px no-repeat, linear-gradient(var(--azul) 0 0) bottom/100% 1.5px no-repeat; }
-  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(min(250px,100%),1fr)); gap:16px; }
+    background:var(--linea); }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(min(196px,100%),1fr)); gap:12px; }
   .cert, .marco, .texto { min-width:0; }
   .cert { display:flex; flex-direction:column; background:var(--papel); border:1px solid var(--linea); border-radius:12px; overflow:hidden;
           text-decoration:none; color:inherit; transition:box-shadow .2s, border-color .2s; }
   .cert:hover { border-color:var(--cobalto); box-shadow:0 18px 40px -22px rgba(14,26,51,.55); }
-  .marco { background:var(--tinta); padding:10px; display:flex; align-items:center; justify-content:center; aspect-ratio:3/2; }
+  .marco { background:var(--tinta); padding:7px; display:flex; align-items:center; justify-content:center; aspect-ratio:3/2; }
   .marco { overflow:hidden; }
   .marco img { width:100%; height:100%; object-fit:contain; display:block; }
   .insignia .marco img { width:auto; height:84%; aspect-ratio:1; border-radius:50%; }
-  .texto { padding:12px 14px 14px; display:flex; flex-direction:column; gap:2px; flex:1; }
-  .texto strong { font-family:var(--titulo); font-weight:700; font-size:16px; line-height:1.25; letter-spacing:-.01em; }
-  .texto span { font-size:14px; color:var(--pizarra); }
-  .texto em { font-style:normal; font-size:14px; font-weight:600; color:var(--cobalto); margin-top:auto; padding-top:8px;
+  .texto { padding:9px 11px 11px; display:flex; flex-direction:column; gap:1px; flex:1; }
+  .texto .inst { font-family:var(--texto); font-size:11.5px; font-weight:600; color:var(--cobalto); }
+  .texto strong { font-family:var(--titulo); font-weight:700; font-size:14px; line-height:1.25; letter-spacing:-.005em; }
+  .texto span { font-size:12.5px; color:var(--pizarra); }
+  .texto em { font-style:normal; font-size:12.5px; font-weight:600; color:var(--cobalto); margin-top:auto; padding-top:6px;
               text-decoration:underline; text-decoration-color:var(--ambar); text-decoration-thickness:2px; text-underline-offset:4px; }
   footer { margin-top:40px; background:var(--tinta); color:#C9D3E6; }
   footer .ancho { padding-top:36px; padding-bottom:40px; display:flex; flex-wrap:wrap; gap:12px 32px; justify-content:space-between; align-items:baseline; }
@@ -135,8 +132,7 @@ pagina = f"""<!doctype html>
 <header>
   <div class="ancho">
     <h1>Certificaciones</h1>
-    <p class="quien">José Manuel González Corado tiene {total} certificados en gestión de proyectos, métodos ágiles, IA generativa y trabajo en equipo. Toca uno para ver el original.</p>
-    <nav aria-label="Instituciones">{nav}</nav>
+    <p class="quien">José Manuel González Corado tiene {total} certificados de PMI, IBM, Atlassian, Cisco, Agile Academy y Simplilearn, en gestión de proyectos, métodos ágiles, IA generativa y trabajo en equipo. Toca uno para ver el original.</p>
   </div>
 </header>
 <main class="ancho">
