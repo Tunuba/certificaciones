@@ -3,53 +3,70 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#16337A">
 <title>Certificaciones de José Manuel González Corado</title>
 <meta name="description" content="Certificados de José Manuel González Corado en gestión de proyectos, metodologías ágiles, IA generativa y habilidades profesionales.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wdth,wght@75..100,400..700&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&display=swap" rel="stylesheet">
 <style>
-  :root { --oscuro:#3a3035; --gris:#58585a; --crema:#fdfaf5; --rosa:#e4c4b4; --verde:#4b5232; --borde:#e6e0d8; }
+  :root {
+    --cobalto:#16337A; --tinta:#0E1A33; --pizarra:#4A5670; --fondo:#EEF1F5; --papel:#FFFFFF; --linea:#D5DBE5;
+    --ambar:#FFB21A; --rojo:#E0303F; --azul:#2266E8;
+    --titulo:"Bricolage Grotesque", "Segoe UI", sans-serif; --texto:"Instrument Sans", "Segoe UI", sans-serif;
+  }
   * { box-sizing:border-box; margin:0; padding:0; }
   html { scroll-behavior:smooth; }
-  body { font-family:"Poppins",Arial,sans-serif; background:var(--crema); color:#3d3d3d; }
-  header { background:var(--oscuro); color:#fff; padding:40px 0 34px; }
-  header .in { padding:0 16px; }
-  header .in, main { max-width:1180px; margin:0 auto; }
-  header h1 { font-size:clamp(24px,4vw,36px); font-weight:700; letter-spacing:.5px; }
-  header p { color:var(--rosa); margin-top:6px; font-size:15px; }
-  header nav { margin-top:16px; display:flex; flex-wrap:wrap; gap:8px; }
-  header nav a { color:#fff; text-decoration:none; font-size:13px; border:1px solid #6a6266; padding:4px 12px; border-radius:20px; }
-  header nav a:hover { background:#4a4045; }
-  main { padding:8px 16px 48px; }
-  section { margin-top:36px; scroll-margin-top:16px; }
-  h2 { font-size:20px; color:var(--oscuro); border-bottom:3px solid var(--oscuro); padding-bottom:6px; margin-bottom:18px; }
-  h2 small { font-size:13px; font-weight:500; color:var(--gris); margin-left:6px; }
-  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr)); gap:20px; }
+  body { font-family:var(--texto); font-size:17px; line-height:1.6; background:var(--fondo); color:var(--tinta); }
+  a { color:inherit; }
+  :focus-visible { outline:3px solid var(--ambar); outline-offset:3px; border-radius:4px; }
+  .ancho { max-width:1200px; margin:0 auto; padding:0 24px; }
+  header { background:var(--cobalto); color:#fff; position:relative; }
+  header::before { content:""; position:absolute; inset:0; pointer-events:none; opacity:.55;
+    background:radial-gradient(circle at 1px 1px, rgba(255,255,255,.10) 1.2px, transparent 1.6px) 0 0/22px 22px; }
+  header .ancho { position:relative; padding-top:64px; padding-bottom:52px; }
+  header h1 { font-family:var(--titulo); font-weight:800; font-size:clamp(40px,6.6vw,92px); line-height:.95; letter-spacing:-.02em;
+              font-variation-settings:"wdth" 92; }
+  header .quien { margin-top:18px; font-size:19px; color:#DCE5FA; max-width:56ch; }
+  header nav { margin-top:24px; display:flex; flex-wrap:wrap; gap:10px 22px; font-size:16px; }
+  header nav a { color:#fff; text-decoration-color:rgba(255,178,26,.7); text-decoration-thickness:2px; text-underline-offset:5px; }
+  header nav a:hover { color:var(--ambar); }
+  main { padding-bottom:40px; }
+  section { padding-top:56px; scroll-margin-top:8px; }
+  h2 { font-family:var(--titulo); font-weight:800; font-size:clamp(26px,3.4vw,38px); letter-spacing:-.02em; line-height:1.05;
+       display:flex; align-items:flex-end; gap:14px; margin-bottom:24px; }
+  h2 small { font-family:var(--texto); font-weight:400; font-size:16px; color:var(--pizarra); letter-spacing:0; }
+  h2::after { content:""; flex:1; height:4px; margin-bottom:8px; border-radius:2px;
+    background:linear-gradient(var(--rojo) 0 0) top/100% 1.5px no-repeat, linear-gradient(var(--azul) 0 0) bottom/100% 1.5px no-repeat; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(min(320px,100%),1fr)); gap:24px; }
   .cert, .marco, .texto { min-width:0; }
-  .cert { display:flex; flex-direction:column; background:#fff; border:1px solid var(--borde); border-radius:8px; overflow:hidden; text-decoration:none; color:inherit; transition:box-shadow .2s, transform .2s; }
-  .cert:hover { box-shadow:0 8px 24px rgba(0,0,0,.12); transform:translateY(-2px); }
-  .marco { background:#f3f1ee; padding:12px; display:flex; align-items:center; justify-content:center; aspect-ratio:4/3; }
-  .marco img { max-width:100%; max-height:100%; width:auto; height:auto; display:block; box-shadow:0 1px 4px rgba(0,0,0,.15); }
-  .insignia .marco img { max-width:60%; max-height:80%; box-shadow:none; border-radius:50%; }
-  .texto { padding:12px 14px 14px; display:flex; flex-direction:column; gap:2px; flex:1; }
-  .texto strong { font-size:14px; color:var(--verde); line-height:1.35; margin-bottom:2px; }
-  .texto span { font-size:12.5px; color:var(--gris); }
-  .texto em { font-style:normal; font-size:12px; font-weight:600; color:var(--oscuro); margin-top:auto; padding-top:8px; }
-  footer { text-align:center; font-size:12px; color:var(--gris); padding:0 16px 32px; }
-  footer a { color:inherit; }
-  @media (max-width:520px) { .grid { grid-template-columns:minmax(0,1fr); } header { padding:28px 0 24px; } }
+  .cert { display:flex; flex-direction:column; background:var(--papel); border:1px solid var(--linea); border-radius:12px; overflow:hidden;
+          text-decoration:none; color:inherit; transition:box-shadow .2s, border-color .2s; }
+  .cert:hover { border-color:var(--cobalto); box-shadow:0 18px 40px -22px rgba(14,26,51,.55); }
+  .marco { background:var(--tinta); padding:14px; display:flex; align-items:center; justify-content:center; aspect-ratio:4/3; }
+  .marco img { max-width:100%; max-height:100%; width:auto; height:auto; display:block; border-radius:3px; }
+  .insignia .marco img { max-width:58%; max-height:78%; border-radius:50%; }
+  .texto { padding:16px 18px 18px; display:flex; flex-direction:column; gap:4px; flex:1; }
+  .texto strong { font-family:var(--titulo); font-weight:700; font-size:18px; line-height:1.25; letter-spacing:-.01em; }
+  .texto span { font-size:15px; color:var(--pizarra); }
+  .texto em { font-style:normal; font-size:15px; font-weight:600; color:var(--cobalto); margin-top:auto; padding-top:12px;
+              text-decoration:underline; text-decoration-color:var(--ambar); text-decoration-thickness:2px; text-underline-offset:4px; }
+  footer { margin-top:56px; background:var(--tinta); color:#C9D3E6; }
+  footer .ancho { padding-top:36px; padding-bottom:40px; display:flex; flex-wrap:wrap; gap:12px 32px; justify-content:space-between; align-items:baseline; }
+  footer strong { font-family:var(--titulo); color:#fff; font-size:22px; }
+  footer a { color:#fff; text-underline-offset:4px; }
+  @media (max-width:700px) { body { font-size:16px; } .ancho { padding:0 16px; } header .ancho { padding-top:44px; padding-bottom:36px; } }
 </style>
 </head>
 <body>
 <header>
-  <div class="in">
-    <h1>José Manuel González Corado</h1>
-    <p>Certificaciones, 20 en total</p>
-    <nav><a href="#g0">Project Management Institute</a><a href="#g1">Atlassian</a><a href="#g2">Agile Academy</a><a href="#g3">Simplilearn</a><a href="#g4">IBM SkillsBuild</a><a href="#g5">Cisco Networking Academy</a></nav>
+  <div class="ancho">
+    <h1>Certificaciones</h1>
+    <p class="quien">José Manuel González Corado tiene 20 certificados en gestión de proyectos, métodos ágiles, IA generativa y trabajo en equipo. Toca uno para ver el original.</p>
+    <nav aria-label="Instituciones"><a href="#g0">Project Management Institute</a><a href="#g1">Atlassian</a><a href="#g2">Agile Academy</a><a href="#g3">Simplilearn</a><a href="#g4">IBM SkillsBuild</a><a href="#g5">Cisco Networking Academy</a></nav>
   </div>
 </header>
-<main>
+<main class="ancho">
   <section id="g0">
     <h2>Project Management Institute <small>6</small></h2>
     <div class="grid">
@@ -161,6 +178,11 @@
     </div>
   </section>
 </main>
-<footer>Proyectos en <a href="https://github.com/Tunuba">github.com/Tunuba</a></footer>
+<footer>
+  <div class="ancho">
+    <strong>José Manuel González Corado</strong>
+    <span>Mira mis proyectos en <a href="https://tunuba.github.io/proyectos/">tunuba.github.io/proyectos</a></span>
+  </div>
+</footer>
 </body>
 </html>
